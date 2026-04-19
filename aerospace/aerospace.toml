@@ -1,0 +1,195 @@
+# AeroSpace config
+# https://nikitabobko.github.io/AeroSpace/guide
+
+config-version = 2
+start-at-login = true
+automatically-unhide-macos-hidden-apps = false
+
+# Default to tiles (side by side), not accordion (stacked)
+default-root-container-layout = 'tiles'
+default-root-container-orientation = 'auto'
+
+# Launch JankyBorders alongside AeroSpace
+after-startup-command = [
+    'exec-and-forget borders active_color=0xffc099ff inactive_color=0x00000000 width=5.0',
+    'exec-and-forget open -a "Ghostty"',
+    'exec-and-forget open -a "kitty"',
+    'exec-and-forget open -a /Users/purpleknight/Applications/Android\ Studio.app'
+]
+
+# Normalizations — keep layouts clean
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+# Mouse follows focus when switching monitors
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+
+# Pin terminal workspace to main external monitor
+[workspace-to-monitor-force-assignment]
+T = 'main'
+
+# Gaps
+[gaps]
+inner.horizontal = 8
+inner.vertical = 8
+outer.left = 8
+outer.bottom = 8
+outer.top = 8
+outer.right = 8
+
+# Workspace 1 — Browser
+[[on-window-detected]]
+if.app-id = 'com.google.Chrome'
+run = 'move-node-to-workspace 1'
+
+# Workspace 2 — Discord
+[[on-window-detected]]
+if.app-id = 'com.hnc.Discord'
+run = 'move-node-to-workspace 2'
+
+# Workspace 3 — Sourcetree
+[[on-window-detected]]
+if.app-id = 'com.torusknot.SourceTreeNotMAS'
+run = 'move-node-to-workspace 3'
+
+# Workspace 4 — Bitwarden
+[[on-window-detected]]
+if.app-id = 'com.bitwarden.desktop'
+run = 'move-node-to-workspace 4'
+
+# Workspace 5 — Claude
+[[on-window-detected]]
+if.app-id = 'com.anthropic.claudefordesktop'
+run = 'move-node-to-workspace 5'
+
+# Workspace 6 — Spotify + WhatsApp
+[[on-window-detected]]
+if.app-id = 'com.spotify.client'
+run = 'move-node-to-workspace 6'
+
+[[on-window-detected]]
+if.app-id = 'net.whatsapp.WhatsApp'
+run = 'move-node-to-workspace 6'
+
+# Workspace T — Ghostty
+[[on-window-detected]]
+if.app-id = 'com.mitchellh.ghostty'
+run = 'move-node-to-workspace T'
+
+# Workspace V — Kitty / LazyVim
+[[on-window-detected]]
+if.app-id = 'net.kovidgoyal.kitty'
+run = 'move-node-to-workspace V'
+
+# Workspace A — Android Studio (Toolbox-managed install)
+[[on-window-detected]]
+if.app-id = 'com.google.android.studio'
+run = 'move-node-to-workspace A'
+
+# Finder always floats
+[[on-window-detected]]
+if.app-id = 'com.apple.finder'
+run = 'layout floating'
+
+# Non-Ghostty windows on workspace T float so they don't tile with Ghostty
+[[on-window-detected]]
+if.app-name-regex-substring = '^(?!Ghostty)'
+if.workspace = 'T'
+run = 'layout floating'
+
+# Non-Kitty windows on workspace V float
+[[on-window-detected]]
+if.app-name-regex-substring = '^(?!kitty)'
+if.workspace = 'V'
+run = 'layout floating'
+
+# Non-Android-Studio windows on workspace A float
+[[on-window-detected]]
+if.app-name-regex-substring = '^(?!Android Studio)'
+if.workspace = 'A'
+run = 'layout floating'
+
+# Keybindings
+[mode.main.binding]
+
+# Window focus (vim-style)
+alt-h = 'focus left'
+alt-j = 'focus down'
+alt-k = 'focus up'
+alt-l = 'focus right'
+
+# Move windows
+alt-shift-h = 'move left'
+alt-shift-j = 'move down'
+alt-shift-k = 'move up'
+alt-shift-l = 'move right'
+
+# Switch workspaces (focus workspace wherever it lives, switching monitor if needed)
+alt-1 = 'workspace 1'
+alt-2 = 'workspace 2'
+alt-3 = 'workspace 3'
+alt-4 = 'workspace 4'
+alt-5 = 'workspace 5'
+alt-6 = 'workspace 6'
+alt-7 = 'workspace 7'
+alt-8 = 'workspace 8'
+alt-9 = 'workspace 9'
+
+# Terminal workspace (launch if not running)
+alt-t = ['workspace T', 'exec-and-forget pgrep -f Ghostty || open -a "Ghostty"']
+
+# LazyVim workspace (launch if not running)
+alt-v = ['workspace V', 'exec-and-forget pgrep -f kitty || open -a "kitty"']
+
+# Android Studio workspace (launch the Toolbox-managed install if not running)
+alt-a = ['workspace A', 'exec-and-forget pgrep -f "Android Studio.app" || open -a /Users/purpleknight/Applications/Android\ Studio.app']
+
+
+# Cycle through workspaces
+alt-tab = 'workspace next --wrap-around'
+alt-shift-tab = 'workspace prev --wrap-around'
+
+# Move window to workspace
+alt-shift-1 = ['move-node-to-workspace 1', 'flatten-workspace-tree', 'balance-sizes']
+alt-shift-2 = ['move-node-to-workspace 2', 'flatten-workspace-tree', 'balance-sizes']
+alt-shift-3 = ['move-node-to-workspace 3', 'flatten-workspace-tree', 'balance-sizes']
+alt-shift-4 = ['move-node-to-workspace 4', 'flatten-workspace-tree', 'balance-sizes']
+alt-shift-5 = ['move-node-to-workspace 5', 'flatten-workspace-tree', 'balance-sizes']
+alt-shift-6 = ['move-node-to-workspace 6', 'flatten-workspace-tree', 'balance-sizes']
+alt-shift-7 = ['move-node-to-workspace 7', 'flatten-workspace-tree', 'balance-sizes']
+alt-shift-8 = ['move-node-to-workspace 8', 'flatten-workspace-tree', 'balance-sizes']
+alt-shift-9 = ['move-node-to-workspace 9', 'flatten-workspace-tree', 'balance-sizes']
+alt-shift-t = ['move-node-to-workspace T', 'flatten-workspace-tree', 'balance-sizes']
+alt-shift-v = ['move-node-to-workspace V', 'flatten-workspace-tree', 'balance-sizes']
+alt-shift-a = ['move-node-to-workspace A', 'flatten-workspace-tree', 'balance-sizes']
+
+# Toggle fullscreen
+alt-f = 'fullscreen'
+
+# Toggle between tiles and accordion (same orientation)
+alt-slash = 'layout tiles accordion'
+
+# Toggle split orientation (horizontal / vertical)
+alt-comma = 'layout horizontal vertical'
+
+# Toggle between tiling and floating
+alt-shift-f = 'layout floating tiling'
+
+# Reset workspace — flatten tree + balance sizes (fixes broken layouts after fullscreen etc.)
+alt-shift-r = ['flatten-workspace-tree', 'balance-sizes']
+
+# Close window
+alt-q = 'close'
+
+# Resize
+alt-minus = 'resize smart -50'
+alt-equal = 'resize smart +50'
+
+# Focus other monitor
+alt-m = 'focus-monitor next --wrap-around'
+
+# Move window to other monitor (follows focus, then reset layout to fix tiling issues)
+alt-shift-m = ['move-node-to-monitor next --wrap-around --focus-follows-window', 'flatten-workspace-tree', 'balance-sizes']
+
+# Move entire workspace to other monitor
+alt-ctrl-m = 'move-workspace-to-monitor next --wrap-around'

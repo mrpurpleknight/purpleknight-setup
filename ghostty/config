@@ -1,0 +1,22 @@
+# Ghostty config
+# Docs: https://ghostty.org/docs/config/reference
+
+# Font
+font-family = JetBrains Mono
+font-size = 14
+
+# Theme
+theme = TokyoNight Moon
+foreground = #dce4ff
+
+# Window
+window-padding-x = 8
+window-padding-y = 8
+window-save-state = default
+macos-titlebar-style = hidden
+
+# Shell integration
+shell-integration = zsh
+
+# Confirm close only when a command is running
+confirm-close-surface = false
